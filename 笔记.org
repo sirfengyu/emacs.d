@@ -1,0 +1,181 @@
+* day2
+** 代码块备份
+#+BEGIN_SRC emacs-lisp
+
+  ;; Added by Package.el.  This must come before configurations of
+  ;; installed packages.  Don't delete this line.  If you don't want it,
+  ;; just comment it out by adding a semicolon to the start of the line.
+  ;; You may delete these explanatory comments.
+  (package-initialize)
+
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (electric-indent-mode t)
+  (setq inhibit-splash-screen t)
+
+  (defun open-my-init-file()
+    (interactive)
+    (find-file "~/.emacs.d/init.el"))
+
+  (global-set-key (kbd "<f2>") 'open-my-init-file)
+
+  ;(resentf-mode t)
+
+  (global-company-mode t)
+
+
+  (setq-default cursor-type 'bar)
+
+  ;;禁止备份文件
+  (setq make-backup-files nil)
+
+  ;;文本块代码高亮
+  (require 'org)
+  (setq org-src-fontify-natively t)
+
+  ;;显示最近编辑文档
+    (require 'recentf)
+    (recentf-mode 1)
+    (setq recentf-max-menu-item 10)
+    (global-set-key (kbd "C-x C-r") 'recentf-open-files)
+
+  ;;选中删除
+    (delete-selection-mode 1)
+
+  ;; 括号匹配
+    (add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
+
+  ;;显示当前行
+  (global-hl-line-mode t)
+
+  ;;显示当前行号
+   (global-linum-mode t)
+
+#+END_SRC
+
+** 文本中代码块
+edit C-c '
+abort C-c C-k
+#+BEGIN_SRC emacs-lisp
+  (global-company-mode t)
+
+
+  (setq-default cursor-type 'bar)
+
+  ;;禁止备份文件
+  (setq make-backup-files nil)
+
+  ;;文本块代码高亮
+  (require 'org)
+  (setq org-src-fontify-natively t)
+
+  ;;显示最近编辑文档
+    (require 'recentf)
+    (recentf-mode 1)
+    (setq recentf-max-menu-item 10)
+    (global-set-key (kbd "C-x C-r") 'recentf-open-files)
+
+  ;;选中删除
+    (delete-selection-mode 1)
+
+  ;; 括号匹配
+    (add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
+
+  ;;显示当前行
+  (global-hl-line-mode t)
+
+  ;;显示当前行号
+   (global-linum-mode t)
+#+END_SRC
+
+<s tab 补齐代码块
+
+1. make cursor style to bar 
+#+BEGIN_SRC emacs-lisp
+  (setq-default cursor-type 'bar)
+#+END_SRC
+
+2. disable backup file
+#+BEGIN_SRC emacs-lisp
+  (setq make-backup-files nil)
+#+END_SRC
+
+3. enable recentf-mode 
+#+BEGIN_SRC emacs-lisp
+  (require 'recentf)
+  (recentf-mode 1)
+  (setq recentf-max-menu-item 10)
+  (global-set-key (kbd "C-x C-r") 'recentf-open-files)
+#+END_SRC
+ 
+
+
+
+** 安装包
+melpa.org
+
+配置源并自动加载包
+#+BEGIN_SRC emacs-lisp
+   (when (>= emacs-major-version 24)
+       (require 'package)
+       (package-initialize)
+       (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+                        ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
+
+  ;; 注意 elpa.emacs-china.org 是 Emacs China 中文社区在国内搭建的一个 ELPA 镜像
+
+   ;; cl - Common Lisp Extension
+   (require 'cl)
+
+   ;; Add Packages
+   (defvar my/packages '(
+                  ;; --- Auto-completion ---
+                  company
+                  ;; --- Better Editor ---
+                  hungry-delete
+                  swiper
+                  counsel
+                  smartparens
+                  ;; --- Major Mode ---
+                  js2-mode
+                  ;; --- Minor Mode ---
+                  nodejs-repl
+                  exec-path-from-shell
+                  ;; --- Themes ---
+                  monokai-theme
+                  ;; solarized-theme
+                  ) "Default packages")
+
+   (setq package-selected-packages my/packages)
+
+   (defun my/packages-installed-p ()
+       (loop for pkg in my/packages
+             when (not (package-installed-p pkg)) do (return nil)
+             finally (return t)))
+
+   (unless (my/packages-installed-p)
+       (message "%s" "Refreshing package database...")
+       (package-refresh-contents)
+       (dolist (pkg my/packages)
+         (when (not (package-installed-p pkg))
+           (package-install pkg))))
+
+   ;; Find Executable Path on OS X
+   (when (memq window-system '(mac ns))
+     (exec-path-from-shell-initialize))
+#+END_SRC
+
+
+;;默认开启全屏
+(setq initial-frame-alist (quote ((fullscreen . maximized))))
+
+;;安装主题
+(add-to-list 'my/packages 'monokai-theme)
+
+;;加载主题
+(load-theme 'monokai 1)
+
+
+
+在 Org-mode 中重置有序列表序号可以直接使用 M-<RET> 。
+
