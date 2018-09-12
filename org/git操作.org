@@ -1,0 +1,11 @@
+git从目录初始化
+
+git init
+git add .
+git commit -am "first commit"
+git remote add origin 远程仓库
+git push -u -f origin master
+
+
+创建远程目录
+
