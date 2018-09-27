@@ -1,0 +1,11 @@
+Linux中查看各文件夹大小
+du -d 1 -h
+
+gitignore
+1. 在已忽略文件夹中不忽略指定文件夹
+/node_modules/*
+!/node_modules/layer/
+
+2. 在已忽略文件夹中不忽略指定文件
+/node_modules/*
+!/node_modules/layer/layer.js

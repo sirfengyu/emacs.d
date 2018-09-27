@@ -4,8 +4,18 @@ git init
 git add .
 git commit -am "first commit"
 git remote add origin 远程仓库
-git push -u -f origin master
+git push -u -f origin 本地分支:远程分支
+pr
 
 
-创建远程目录
 
+git remote add origin https://fengyu@code.xhqb.io/xhTestGroup/appAutoTest.git
+查看远程路径
+git remote -v
+
+
+
+
+删除远程分支
+git branch -r -d origin/branch-name
+git push origin :branch-name
